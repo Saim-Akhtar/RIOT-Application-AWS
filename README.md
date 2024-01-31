@@ -1,34 +1,5 @@
-<div align="center">
-<h1 align="center">
-<img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
 <br>RIOT Application AWS</h1>
-<h3>◦ ► FIT-IoT testbed, RIOT, AWS cloud, Mosquitto MQTT, NodeRed, Influxdb, Grafana</h3> 
-<p align="center">
-<img src="https://img.shields.io/badge/C-A8B9CC.svg?style=for-the-badge&logo=C&logoColor=black" alt="C" />
-<img src="https://img.shields.io/badge/JSON-000000.svg?style=for-the-badge&logo=JSON&logoColor=white" alt="JSON" />
-</p>
-<img src="https://img.shields.io/github/license/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub license" />
-<img src="https://img.shields.io/github/last-commit/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="git-last-commit" />
-<img src="https://img.shields.io/github/commit-activity/m/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub commit activity" />
-<img src="https://img.shields.io/github/languages/top/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub top language" />
-</div>
 
---
-
-##  Table of Contents
-- [ Table of Contents](#-table-of-contents)
-- [ Overview](#-overview)
-- [ repository Structure](#-repository-structure)
-- [ Modules](#modules)
-- [ Getting Started](#-getting-started)
-    - [ Installation](#-installation)
-    - [ Running FIT-LAB-MQTT-AWSIOT](#-running-FIT-LAB-MQTT-AWSIOT)
-    - [ Tests](#-tests)
-    - [ Dashboard](#-dashboard)
-
-
-
----
 
 ---
 
