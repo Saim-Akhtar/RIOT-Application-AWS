@@ -171,7 +171,7 @@ Check the global IPv6 address of the A8 node
 ```sh
 ifconfig
 ```
-![Alt text](/images/image1.png)
+![Alt text](/Images/image1.png)
 
 7. Start MQTT Broker
 From the A8 shared directory, start the MQTT broker using config.conf
@@ -179,14 +179,14 @@ From the A8 shared directory, start the MQTT broker using config.conf
 cd ~/A8
 broker_mqtts config.conf
 ```
-![Alt text](/images/image2.png)
+![Alt text](/Images/image2.png)
 
 Configure and Start Mosquitto Bridge
 From another terminal on the A8 node, check for existing mosquitto service and stop it
-![Alt text](/images/image3.png)
+![Alt text](/Images/image3.png)
 Modify mosquitto.config with the IPv6 address of the Mosquitto broker (e.g., AWS-EC2 instance)
 
-![Alt text](/images/image4.png)
+![Alt text](/Images/image4.png)
 
 Start Mosquitto service using the modified configuration file
 ```sh
@@ -213,7 +213,7 @@ Log into the M3 node
 ```sh
 nc m3-<node-id> 20000
 ```
-![Alt text](/images/image5.png)
+![Alt text](/Images/image5.png)
 
 ###  Dashboard 
 
@@ -233,7 +233,7 @@ sudo apt clean
 ```sh
 sudo service mosquitto status
 ```
-![Alt text](/images/image6.png)
+![Alt text](/Images/image6.png)
 
 4. Install docker engine on EC2 instance following the tutorial: https://docs.docker.com/engine/install/ubuntu/
 
@@ -264,34 +264,34 @@ Port 3000 (default port for Grafana)
 
 10. On node red add mqtt in network block and connect it to influx out storage block.
 
-![Alt text](/images/image7.png)
+![Alt text](/Images/image7.png)
 
 11. Configure mqqt broker with the ip address and port of mosquitto broker running on EC2 instance.
 
-![Alt text](/images/image8.png)
+![Alt text](/Images/image8.png)
 
-![Alt text](/images/image9.png)
+![Alt text](/Images/image9.png)
 
 12. Configure Influxdb out storage block with the ip address and port of influxdb service runnning on EC2 instances, and add details of bucket created in step 9.
 
-![Alt text](/images/image10.png)
-![Alt text](/images/image11.png)
+![Alt text](/Images/image10.png)
+![Alt text](/Images/image11.png)
 
 13. On Grafana add influxdb as data sources, and add details for the influxdb bucket created in step 9.
 
-![Alt text](/images/image12.png)
-![Alt text](/images/image13.png)
+![Alt text](/Images/image12.png)
+![Alt text](/Images/image13.png)
 
 14. Copy Query code from the influxdb bucket, and use it in grafana dashboard, to add visualization panel for each variable.
-![Alt text](/images/image14.png)
-![Alt text](/images/image15.png)
+![Alt text](/Images/image14.png)
+![Alt text](/Images/image15.png)
 
 15. After repeating the previous step for each variable save the dashboard.
-![Alt text](/images/image16.png)
+![Alt text](/Images/image16.png)
 
 
 ###  Demo Video
 
-[Demo Video](https://youtu.be/lsvIGaYIWuI)
+[Demo Video](https://www.youtube.com/watch?v=D-Ow4Ak13AE)
 
 
