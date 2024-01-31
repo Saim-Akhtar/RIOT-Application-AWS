@@ -139,21 +139,33 @@ Check the global IPv6 address of the A8 node and copy it to use in RIOT Sensor N
 ifconfig
 ```
 
-7. Start MQTT Broker
+7. Start Rsmb Broker
 From the A8 shared directory, start the Rsmb broker using config.conf
 ```sh
 cd ~/A8
 cd RSMB-Broker
 ./broker_mqtts config.conf
 ```
-![Alt text](/Images/image2.png)
 
 8. Configure and Start Mosquitto Client Bridge
 Kill the ports of any existing running mosquitto client
-![Alt text](/Images/image3.png)
-Modify mosquitto.config with the IPv6 address of the EC2 instance
+Check the existing mosquitto ports by the following command
 
-![Alt text](/Images/image4.png)
+```sh
+ps -ef | grep mosquitto
+```
+If there is a port in use, kill the port by using the following command
+```sh
+kill <port>
+```
+
+9. Modify mosquitto.config with the IPv6 address of the EC2 instance
+```sh
+#Paste your AWS Mosquitto MQTT address in the form of <IPv6 address>:<port>
+address <IPv6 address of EC2 instance>:1883
+
+#Example: address 2a05:d016:c59:1d18:70d3:bed4:fc5a:68ac:1883
+```
 
 Start Mosquitto service
 ```sh
@@ -181,7 +193,6 @@ Log into the M3 node
 ```sh
 nc m3-104 20000
 ```
-![Alt text](/Images/image5.png)
 
 ###  AWS Cloud EC2
 
@@ -234,21 +245,26 @@ docker run -d --name=grafana -p 3000:3000 grafana/grafana
 ```
 8. Make sure to have the following ports publicly accessible in security setting of EC2:
 
-![Alt text](/Images/image7.png)
+![Alt text](/Images/7.jpg)
 
-9. Go to InfluxDB using <EC2-public-IPv4 Address>:8086, setup an organization name and create a bucket.
+9. Go to InfluxDB using <EC2-public-IPv4-Address>:8086, setup an organization name and create a bucket.
 
-10. Start running the python mqtt subsciber:
+10. Start running the python mqtt subscriber:
 
-![Alt text](/Images/image7.png)
+![Alt text](/Images/5.jpg)
 
-11. On Grafana add influxdb as data sources, and add details for the influxdb bucket which you created in previous steps.
+11. This is how the data will be visible on InfluxDB:
+![Alt text](/Images/1.jpg)
 
-![Alt text](/Images/image12.png)
+12. On Grafana add influxdb as data sources, and add details for the influxdb bucket which you created in previous steps.
 
-12. Copy the Query code from the influxdb bucket, and paste it in grafana dashboard, to just simply view the data in the table.
-![Alt text](/Images/image14.png)
-![Alt text](/Images/image15.png)
+![Alt text](/Images/6.jpg)
+
+13. Copy the Query code from the influxdb bucket:
+![Alt text](/Images/2.jpg)
+
+and paste it in grafana dashboard, to just simply view the data in the table.
+![Alt text](/Images/4.png)
 
 
 
