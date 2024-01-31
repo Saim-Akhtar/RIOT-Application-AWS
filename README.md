@@ -13,7 +13,7 @@
 <img src="https://img.shields.io/github/languages/top/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub top language" />
 </div>
 
----
+--
 
 ##  Table of Contents
 - [ Table of Contents](#-table-of-contents)
@@ -44,16 +44,14 @@
 
 ```sh
 └── FIT-LAB-MQTT-AWSIOT/
-    ├── Broker_config/
+    ├── RSMB-broker/
     │   └── config.conf
-    ├── Grafana/
-    │   └── Grafana_Dashboard.json
-    ├── Mosquitto_Bridge/
+    ├── Python-MQTT-subscriber/
+    │   └── mqtt_subscriber.py
+    ├── Mosquitto-Client-Bridge/
     │   └── mosquitto.config
-    ├── NodeRed/
-    │   └── NodeRed_Flow.json
-    └── Sensor_node/
-        ├── Makefile.mak
+    └── RIOT-Sensor-Node/
+        ├── Makefile
         └── main.c
 
 ```
@@ -63,44 +61,36 @@
 
 ##  Modules
 
-<details closed><summary>Broker_config</summary>
+<details closed><summary>RSMB-Broker</summary>
 
 | File                                                                                                   | Summary       |
 | ---                                                                                                    | ---           |
-| [config.conf](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Broker_config/config.conf) | ► The config.conf file enables MQTT-SN and MQTT connections, with debug tracing and specific listeners. It also establishes a connection named "local_bridge_to_ec2" between local and AWS IoT gateways on respective ports.|
+| [config.conf](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/RSMB-Broker/config.conf) | ► The config.conf file enables MQTT connections, with debug tracing and specific listeners. It also establishes a connection named "local_to_cloud" between sensor node and Mosquitto Client on A8 node on respective ports.|
 
 </details>
 
-<details closed><summary>Sensor_node</summary>
+<details closed><summary>RIOT-Sensor-Node</summary>
 
 | File                                                                                                   | Summary       |
 | ---                                                                                                    | ---           |
-| [main.c](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Sensor_node/main.c)             | ► The C program for the IoT sensor node, named "SensorNode," includes MQTT-SN communication, LPS331AP sensor readings, and a command-line interface (CLI). It periodically measures temperature and pressure, publishes the data to an MQTT broker, and provides status reports via the CLI. The program creates threads for MQTT communication and the main measurement loop. |
-| [Makefile.mak](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Sensor_node/Makefile.mak) | ► The Makefile for the SensorNode application in RIOT OS configures a native board, includes necessary modules for sensor and network functionality, sets up MQTT modules for communication, and defines parameters such as server address, port, and MQTT topics.|
+| [main.c](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/RIOT-Sensor-Node/main.c)             | ► The C program for the IoT sensor node, named "IoTSensors," includes MQTT-SN communication, LPS331AP sensor readings, and a command-line interface (CLI). It periodically measures temperature and pressure, publishes the data to an MQTT broker, and provides status reports via the CLI. The program creates threads for MQTT communication and the main measurement loop. |
+| [Makefile](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/RIOT-Sensor-Node/Makefile) | ► The Makefile for the SensorNode application in RIOT OS configures a native board, includes necessary modules for sensor and network functionality, sets up MQTT modules for communication, and defines parameters such as server address, port, and MQTT topics.|
 
 </details>
 
-<details closed><summary>Grafana</summary>
-
-| File                                                                                                                   | Summary       |
-| ---                                                                                                                    | ---           |
-| [Grafana_Dashboard.json](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Grafana/Grafana_Dashboard.json) | ► It includes panels displaying temperature and pressure information over time, with thresholds for visualization. The dashboard is designed to refresh every 5 seconds.|
-
-</details>
-
-<details closed><summary>Nodered</summary>
+<details closed><summary>Python-MQTT-Subscriber</summary>
 
 | File                                                                                                         | Summary       |
 | ---                                                                                                          | ---           |
-| [NodeRed_Flow.json](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/NodeRed/NodeRed_Flow.json) | ► The Node-RED flow titled "Flow 1" includes MQTT input for the topic "localgateway_to_awsiot," with subsequent debugging and storage in InfluxDB. It warns about container setup for preserving flow changes in Docker. The MQTT input connects to the broker at 52.204.227.162:1883, and InfluxDB storage uses the database "iot" at 127.0.0.1:8086.|
+| [NodeRed_Flow.json](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Python-MQTT-Subscriber/mqtt_subscriber.json) | ► The python script which acts as a mqtt subscriber. It subscribes to the mqtt topic "local_to_cloud" and then it further connects to the InfluxDB to save the payload data in the database.|
 
 </details>
 
-<details closed><summary>Mosquitto_bridge</summary>
+<details closed><summary>Mosquitto-Client-Bridge</summary>
 
 | File                                                                                                                | Summary       |
 | ---                                                                                                                 | ---           |
-| [mosquitto.config](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Mosquitto_Bridge/mosquitto.config) | ► It sets up an MQTT bridge to AWS IoT Core. It includes connection details such as the AWS IoT ATS endpoint, specifies bridged topics for bidirectional communication, sets the MQTT protocol version, enables SSL/TLS with certificate-based authentication, and configures cleanup and logging options. |
+| [mosquitto.config](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Mosquitto-Client-Bridge/mosquitto.config) | ► The mosquitto client bridge which act as a bridge between rsmb broker and AWS EC2 mosquitto client. |
 
 </details>
 
@@ -110,17 +100,17 @@
 
 ###  Installation
 
-1. Clone the FIT-LAB-MQTT-AWSIOT repository:
+1. Clone the RIOT-Application-AWS repository:
 ```sh
-git clone https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT
+git clone https://github.com/Saim-Akhtar/RIOT-Application-AWS
 ```
 
 2. Change to the project directory:
 ```sh
-cd FIT-LAB-MQTT-AWSIOT
+cd RIOT-Application-AWS
 ```
 
-###  Running FIT-LAB-MQTT-AWSIOT
+###  Running RIOT-Application-AWS
 
 1. Connect to Grenoble SSH Frontend
 ```bash
@@ -130,87 +120,91 @@ ssh <login>@grenoble.iot-lab.info
 2. Start Experiment on IoT-Lab Test Bed
 
 Launch an experiment with two M3 nodes and one A8 node
-Wait for the experiment to reach the "Running" state
-Get the list of nodes
+Wait for the experiment to reach the "Running" state.
+I have used 103,104 of M3 nodes and 106 of A8 node as an example. You can use any other node-ids
+```sh
+iotlab-experiment submit -n iot -d 120 -l grenoble,m3,103-104 -l grenoble,a8,106
+```
 
-3. Build Border Router Firmware
+
+3. Setup Border Rounter on one of the M3 Nodes
 Source RIOT environment
 ```sh
 source /opt/riot.source
 ```
 Build border router firmware for M3 node with baudrate 500000
-Note: Use a different 802.15.4 channel if needed
 ```sh
-make ETHOS_BAUDRATE=500000 DEFAULT_CHANNEL=<channel> BOARD=iotlab-m3 -C examples/gnrc_border_router clean all
+make ETHOS_BAUDRATE=500000 DEFAULT_CHANNEL=20 BOARD=iotlab-m3 -C RIOT/examples/gnrc_border_router clean all
 ```
 
 
-4. Flash Border Router Firmware
-Flash the border router firmware to the first M3 node (m3-1 in this case)
+4. Flash Border Router
+Now flash the border router to the first M3 node (m3-1 in this case)
 ```sh
-iotlab-node --flash examples/gnrc_border_router/bin/iotlab-m3/gnrc_border_router.elf -l grenoble,m3,<node-id>
+iotlab-node --flash RIOT/examples/gnrc_border_router/bin/iotlab-m3/gnrc_border_router.elf -l grenoble,m3,103
 ```
 
 
 5. Configure Border Router Network
-Choose an IPv6 prefix for the site (e.g., 2001:660:5307:3100::/64)
-Configure the network of the border router on m3-<node-id>
-Propagate an IPv6 prefix with ethos_uhcpd.py
+Choose an IPv6 prefix for the grenoble site (e.g., 2001:660:5307:3100::/64 to 2001:660:5307:317f::/64)
+Configure the network of the border router on m3-103
+Setup a tap interface and an IPv6 prefix with ethos_uhcpd.py
 ```sh
-sudo ethos_uhcpd.py m3-<node-id> tap0 2001:660:5307:3100::1/64
+sudo ethos_uhcpd.py m3-103 tap0 2001:660:5307:3100::1/64
 ```
 
-6. Setup MQTT Broker and Mosquitto Bridge on A8 Node
-Now, in another terminal, SSH to the SSH frontend, and login into clone the mqtt_broker and mosquitto bridge configuration files in A8 shared directory.
+6. Setup RSMB Broker and Mosquitto Bridge on A8 Node. 
+In a new terminal connect to the SSH frontend, and login into clone the mqtt_broker and mosquitto bridge configuration files in A8 shared directory.
 SSH into the A8 node
 ```sh
-ssh root@node-a8-1
+ssh root@node-a8-106
 ```
-Check the global IPv6 address of the A8 node
+Check the global IPv6 address of the A8 node and copy it to use in RIOT Sensor Node
 ```sh
 ifconfig
 ```
-![Alt text](/Images/image1.png)
 
 7. Start MQTT Broker
-From the A8 shared directory, start the MQTT broker using config.conf
+From the A8 shared directory, start the Rsmb broker using config.conf
 ```sh
 cd ~/A8
-broker_mqtts config.conf
+cd RSMB-Broker
+./broker_mqtts config.conf
 ```
 ![Alt text](/Images/image2.png)
 
-Configure and Start Mosquitto Bridge
-From another terminal on the A8 node, check for existing mosquitto service and stop it
+8. Configure and Start Mosquitto Client Bridge
+Kill the ports of any existing running mosquitto client
 ![Alt text](/Images/image3.png)
-Modify mosquitto.config with the IPv6 address of the Mosquitto broker (e.g., AWS-EC2 instance)
+Modify mosquitto.config with the IPv6 address of the EC2 instance
 
 ![Alt text](/Images/image4.png)
 
-Start Mosquitto service using the modified configuration file
+Start Mosquitto service
 ```sh
-root@node-a8-3:~/A8/mqtt_bridge# mosquitto -c mosquitto.conf
+root@node-a8-3:~/A8/Mosquitto-Client-Bridge/mqtt_bridge# mosquitto -c mosquitto.conf
 ```
 
-###  Tests
-#### Build and Flash Sensor Node Firmware
-From another terminal log into SSH front end of grenoble site
-Clone the sensor node directory containing Makefile and main.c
-Build the firmware for the sensor node using A8 node's IPv6 address and tap-id
+#### Setup and Build Flash RIOT Sensor Node Firmware
+From new terminal connect again to SSH front end of grenoble site and enter the RIOT-Sensor-Node
 ```sh
-make DEFAULT_CHANNEL=15 SERVER_ADDR=<IPv6 address> EMCUTE_ID=station(tap-id) BOARD=iotlab-m3 -C . clean all
+cd RIOT-Sensor-Node
+```
+Build the firmware for the riot sensor node using A8 node's IPv6 address (copied previously) and tap-id (i.e. 0 in our case)
+```sh
+make DEFAULT_CHANNEL=20 SERVER_ADDR=<IPv6 address> EMCUTE_ID=station0 BOARD=iotlab-m3 -C . clean all
 ```
 
-#### Flash the sensor node firmware on an M3 node
+#### Flash the riot sensor node firmware on an M3 node 104
 ```sh
-iotlab-node --flash ./bin/iotlab-m3/SensorNode.elf -l grenoble,m3,<node-id>
+iotlab-node --flash ./bin/iotlab-m3/SensorNode.elf -l grenoble,m3,104
 ```
 
 
-#### Connect to Sensor Node
+#### Connect to RIOT Sensor Node
 Log into the M3 node
 ```sh
-nc m3-<node-id> 20000
+nc m3-104 20000
 ```
 ![Alt text](/Images/image5.png)
 
