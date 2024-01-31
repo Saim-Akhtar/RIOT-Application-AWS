@@ -264,7 +264,7 @@ docker run -d --name=grafana -p 3000:3000 grafana/grafana
 ![Alt text](/Images/2.jpg)
 
 and paste it in grafana dashboard, to just simply view the data in the table.
-![Alt text](/Images/4.png)
+![Alt text](/Images/4.jpg)
 
 
 
