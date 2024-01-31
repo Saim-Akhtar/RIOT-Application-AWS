@@ -8,10 +8,10 @@
 <img src="https://img.shields.io/badge/C-A8B9CC.svg?style=for-the-badge&logo=C&logoColor=black" alt="C" />
 <img src="https://img.shields.io/badge/JSON-000000.svg?style=for-the-badge&logo=JSON&logoColor=white" alt="JSON" />
 </p>
-[<img src="https://img.shields.io/github/license/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub license" />
+<img src="https://img.shields.io/github/license/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub license" />
 <img src="https://img.shields.io/github/last-commit/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="git-last-commit" />
 <img src="https://img.shields.io/github/commit-activity/m/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub commit activity" />
-<img src="https://img.shields.io/github/languages/top/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub top language" />](url)
+<img src="https://img.shields.io/github/languages/top/Awais-Mughal/FIT-LAB-MQTT-AWSIOT?style=for-the-badge&color=5D6D7E" alt="GitHub top language" />
 </div>
 
 ---
