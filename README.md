@@ -30,17 +30,21 @@
 
 ---
 
+---
+
 
 ##  Overview
 
- In this project an IoT (Internet of Things) sensor node is developed using the RIOT operating system. The sensor node is designed to collect environmental data, including temperature and pressure, and transmit this data to an MQTT (Message Queuing Telemetry Transport) broker using secure protocols,The sensor node communicates with an MQTT broker, and the Mosquitto broker bridge is configured to connect to AWS IoT. and visualizes the data through Grafana.
+ 
+ 
+In this project, we have created an IoT (Internet of Things) sensor node utilizing the RIOT operating system. This sensor node is specifically engineered for the collection of environmental data, such as temperature and pressure. The collected data is then securely transmitted to an MQTT (Message Queuing Telemetry Transport) broker through secure protocols. The sensor node establishes communication with an RSMB broker, and the configuration of the Mosquitto client bridge enables a connection to AWS EC2. Subsequently, a Python MQTT client subscribed to the topic stores the data in InfluxDB, and the information is visualized through Grafana.
 
 ![Alt text](/Images/SystemArchitecture.png)
 
 ---
 
 
-##  Repository Structure
+##  Directory Structure
 
 ```sh
 └── FIT-LAB-MQTT-AWSIOT/
@@ -59,13 +63,13 @@
 ---
 
 
-##  Modules
+##  Files and Folders
 
 <details closed><summary>RSMB-Broker</summary>
 
 | File                                                                                                   | Summary       |
 | ---                                                                                                    | ---           |
-| [config.conf](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/RSMB-Broker/config.conf) | ► The config.conf file enables MQTT connections, with debug tracing and specific listeners. It also establishes a connection named "local_to_cloud" between sensor node and Mosquitto Client on A8 node on respective ports.|
+| [config.conf](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/RSMB-Broker/config.conf) | ► The config.conf file enables MQTT connections, with debug tracing and specific listeners. It also establishes a connection named "local_to_cloud" between sensor node and Mosquitto Client on A8 node on respective ports.|
 
 </details>
 
@@ -73,8 +77,8 @@
 
 | File                                                                                                   | Summary       |
 | ---                                                                                                    | ---           |
-| [main.c](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/RIOT-Sensor-Node/main.c)             | ► The C program for the IoT sensor node, named "IoTSensors," includes MQTT-SN communication, LPS331AP sensor readings, and a command-line interface (CLI). It periodically measures temperature and pressure, publishes the data to an MQTT broker, and provides status reports via the CLI. The program creates threads for MQTT communication and the main measurement loop. |
-| [Makefile](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/RIOT-Sensor-Node/Makefile) | ► The Makefile for the SensorNode application in RIOT OS configures a native board, includes necessary modules for sensor and network functionality, sets up MQTT modules for communication, and defines parameters such as server address, port, and MQTT topics.|
+| [main.c](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/RIOT-Sensor-Node/main.c)             | ► The C program for the IoT sensor node, named "IoTSensors," includes MQTT-SN communication, LPS331AP sensor readings, and a command-line interface (CLI). It periodically measures temperature and pressure, publishes the data to an MQTT broker, and provides status reports via the CLI. The program creates threads for MQTT communication and the main measurement loop. |
+| [Makefile](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/RIOT-Sensor-Node/Makefile) | ► The Makefile for the SensorNode application in RIOT OS configures a native board, includes necessary modules for sensor and network functionality, sets up MQTT modules for communication, and defines parameters such as server address, port, and MQTT topics.|
 
 </details>
 
@@ -82,7 +86,7 @@
 
 | File                                                                                                         | Summary       |
 | ---                                                                                                          | ---           |
-| [NodeRed_Flow.json](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Python-MQTT-Subscriber/mqtt_subscriber.json) | ► The python script which acts as a mqtt subscriber. It subscribes to the mqtt topic "local_to_cloud" and then it further connects to the InfluxDB to save the payload data in the database.|
+| [NodeRed_Flow.json](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/Python-MQTT-Subscriber/mqtt_subscriber.json) | ► The python script which acts as a mqtt subscriber. It subscribes to the mqtt topic "local_to_cloud" and then it further connects to the InfluxDB to save the payload data in the database.|
 
 </details>
 
@@ -90,7 +94,7 @@
 
 | File                                                                                                                | Summary       |
 | ---                                                                                                                 | ---           |
-| [mosquitto.config](https://github.com/Awais-Mughal/FIT-LAB-MQTT-AWSIOT/blob/main/Mosquitto-Client-Bridge/mosquitto.config) | ► The mosquitto client bridge which act as a bridge between rsmb broker and AWS EC2 mosquitto client. |
+| [mosquitto.config](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/Mosquitto-Client-Bridge/mosquitto.config) | ► The mosquitto client bridge which act as a bridge between rsmb broker and AWS EC2 mosquitto client. |
 
 </details>
 
@@ -208,83 +212,76 @@ nc m3-104 20000
 ```
 ![Alt text](/Images/image5.png)
 
-###  Dashboard 
+###  AWS Cloud EC2
 
-1. Create EC2 instance and assign IPv6 subnet to the instance following tutorial : 
+1. Create EC2 instance and assign IPv6 subnet according to the following tutorial : 
 https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-ipv6-only-subnets-and-ec2-instances/
 
-2. Login to EC2 instance using SSH and install mosquitto broker:
+2. Login to EC2 instance using SSH and install mosquitto client using apt-get:
 ```sh
-sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
 sudo apt-get update
 sudo apt-get install mosquitto
 sudo apt-get install mosquitto-clients
 sudo apt clean
 ```
-3. Verify if the mosquitto service is running:
+3. Check if the mosquitto service is running (It should show broker running):
 
 ```sh
 sudo service mosquitto status
 ```
-![Alt text](/Images/image6.png)
 
-4. Install docker engine on EC2 instance following the tutorial: https://docs.docker.com/engine/install/ubuntu/
-
-5. Run the node NodeRed container on EC2 instance:
+4. Allow anonymous connections on mosquitto configurations and enable listener 1883
 
 ```sh
-docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
+sudo nano /etc/mosquitto/mosquitto.conf
 ```
-6. Run the node Influxdb container on EC2 instance:
+and then add the follow lines in the file
+```bash
+listener 1883
+allow_anonymous true
+
+```
+Then restart the mosquitto service:
+```sh
+sudo service mosquitto restart
+```
+
+5. Install docker on EC2 instance:
+```sh
+sudo snap install docker
+```
+
+6. Setup the Influxdb container on EC2 instance:
 
 ```sh
 docker run --detach --name influxdb -p 8086:8086 influxdb:2.2.0
 ```
-7. Run the node Grafana container on EC2 instance:
+7. Setup the Grafana container on EC2 instance:
 
 ```sh
 docker run -d --name=grafana -p 3000:3000 grafana/grafana
 ```
-8. Allow public access on following ports in network security settings:
-
-```sh
-Port 1883 (default port for Mosquitto)
-Port 1880 (default port for NodeRed)
-Port 8086 (default port for Influxdb)
-Port 3000 (default port for Grafana)
-```
-9. On influxdb, setup an organization name, for this project and create a bucket to collect data.
-
-10. On node red add mqtt in network block and connect it to influx out storage block.
+8. Make sure to have the following ports publicly accessible in security setting of EC2:
 
 ![Alt text](/Images/image7.png)
 
-11. Configure mqqt broker with the ip address and port of mosquitto broker running on EC2 instance.
+9. Go to InfluxDB using <EC2-public-IPv4 Address>:8086, setup an organization name and create a bucket.
 
-![Alt text](/Images/image8.png)
+10. Start running the python mqtt subsciber:
 
-![Alt text](/Images/image9.png)
+![Alt text](/Images/image7.png)
 
-12. Configure Influxdb out storage block with the ip address and port of influxdb service runnning on EC2 instances, and add details of bucket created in step 9.
-
-![Alt text](/Images/image10.png)
-![Alt text](/Images/image11.png)
-
-13. On Grafana add influxdb as data sources, and add details for the influxdb bucket created in step 9.
+11. On Grafana add influxdb as data sources, and add details for the influxdb bucket which you created in previous steps.
 
 ![Alt text](/Images/image12.png)
-![Alt text](/Images/image13.png)
 
-14. Copy Query code from the influxdb bucket, and use it in grafana dashboard, to add visualization panel for each variable.
+12. Copy the Query code from the influxdb bucket, and paste it in grafana dashboard, to just simply view the data in the table.
 ![Alt text](/Images/image14.png)
 ![Alt text](/Images/image15.png)
 
-15. After repeating the previous step for each variable save the dashboard.
-![Alt text](/Images/image16.png)
 
 
 ###  Demo Video
 
 [Demo Video](https://www.youtube.com/watch?v=D-Ow4Ak13AE)
-
 
