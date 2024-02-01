@@ -159,96 +159,6 @@ void *main_loop(void *arg){
     }
 }
 
-// static void *lsm303dlhc_thread(void *arg)
-// {
-//     (void)arg;
-
-//     while (1) {
-//         /* Acquire the mutex here */
-//          mutex_lock(&lsm_lock);
-
-
-//         /* Read the accelerometer/magnetometer values here */
-//         lsm303dlhc_3d_data_t mag_value;
-//         lsm303dlhc_3d_data_t acc_value;
-//         lsm303dlhc_read_acc(&lsm303dlhc, &acc_value);
-//         printf("Accelerometer x: %i y: %i z: %i\n",
-//                acc_value.x_axis, acc_value.y_axis, acc_value.z_axis);
-//         lsm303dlhc_read_mag(&lsm303dlhc, &mag_value);
-//         printf("Magnetometer x: %i y: %i z: %i\n",
-//                mag_value.x_axis, mag_value.y_axis, mag_value.z_axis);
-
-
-//         /* Release the mutex here */
-//         mutex_unlock(&lsm_lock);
-
-
-//         ztimer_sleep(ZTIMER_MSEC, 500);
-//     }
-
-//     return 0;
-// }
-
-// static void _lsm303dlhc_usage(char *cmd)
-// {
-//     printf("usage: %s <start|stop>\n", cmd);
-// }
-
-// static int lsm303dlhc_handler(int argc, char *argv[])
-// {
-//     if (argc < 2) {
-//         _lsm303dlhc_usage(argv[0]);
-//         return -1;
-//     }
-
-//     /* Implement the lsm303dlhc start/stop subcommands here */
-//     if (!strcmp(argv[1], "start")) {
-//         mutex_unlock(&lsm_lock);
-//     }
-//     else if (!strcmp(argv[1], "stop")) {
-//         mutex_trylock(&lsm_lock);
-//     }
-//     else {
-//         _lsm303dlhc_usage(argv[0]);
-//         return -1;
-//     }
-
-
-//     return 0;
-// }
-
-// static void _lpsxxx_usage(char *cmd)
-// {
-//     printf("usage: %s <temperature|pressure>\n", cmd);
-// }
-
-// static int lpsxxx_handler(int argc, char *argv[])
-// {
-//     if (argc < 2) {
-//         _lpsxxx_usage(argv[0]);
-//         return -1;
-//     }
-
-//     /* Implement the lps331ap temperature/pressure subcommands here */
-//     if (!strcmp(argv[1], "temperature")) {
-//         int16_t temp = 0;
-//         lpsxxx_read_temp(&lpsxxx, &temp);
-//         printf("Temperature: %i.%u°C\n", (temp / 100), (temp % 100));
-//     }
-//     else if (!strcmp(argv[1], "pressure")) {
-//         uint16_t pres = 0;
-//         lpsxxx_read_pres(&lpsxxx, &pres);
-//         printf("Pressure: %uhPa\n", pres);
-//     }
-//     else {
-//         _lpsxxx_usage(argv[0]);
-//         return -1;
-//     }
-
-
-//     return 0;
-// }
-
 static void *emcute_thread(void *arg)
 {
     (void)arg;
@@ -334,20 +244,6 @@ int setup_mqtt(void)
 
     return 1;
 }
-
-// static const shell_command_t commands[] = {
-//     /* lsm303dlhc shell command handler */
-//     { "lsm", "start/stop reading accelerometer values", lsm303dlhc_handler },
-
-//     /* Add the lps331ap command description here */
-//     { "lps", "read the lps331ap values", lpsxxx_handler },
-
-//     // { "spub","start publishing random values",start_pub},
-
-
-//     { NULL, NULL, NULL}
-// };
-
 
 static int cmd_status(int argc, char *argv[]){
     (void)argc;
