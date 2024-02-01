@@ -18,7 +18,7 @@ In this project, we have created an IoT (Internet of Things) sensor node utilizi
 ##  Directory Structure
 
 ```sh
-└── FIT-LAB-MQTT-AWSIOT/
+└── RIOT-Application-AWS/
     ├── RSMB-broker/
     │   └── config.conf
     ├── Python-MQTT-subscriber/
@@ -49,7 +49,7 @@ In this project, we have created an IoT (Internet of Things) sensor node utilizi
 | File                                                                                                   | Summary       |
 | ---                                                                                                    | ---           |
 | [main.c](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/RIOT-Sensor-Node/main.c)             | ► The C program for the IoT sensor node, named "IoTSensors," includes MQTT-SN communication, LPS331AP sensor readings, and a command-line interface (CLI). It periodically measures temperature and pressure, publishes the data to an MQTT broker, and provides status reports via the CLI. The program creates threads for MQTT communication and the main measurement loop. |
-| [Makefile](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/RIOT-Sensor-Node/Makefile) | ► The Makefile for the SensorNode application in RIOT OS configures a native board, includes necessary modules for sensor and network functionality, sets up MQTT modules for communication, and defines parameters such as server address, port, and MQTT topics.|
+| [Makefile](https://github.com/Saim-Akhtar/RIOT-Application-AWS/blob/main/RIOT-Sensor-Node/Makefile) | ► The Makefile for the IoTSensors application in RIOT OS configures a native board, includes necessary modules for sensor and network functionality, sets up MQTT modules for communication, and defines parameters such as server address, port, and MQTT topics.|
 
 </details>
 
@@ -184,7 +184,7 @@ make DEFAULT_CHANNEL=20 SERVER_ADDR=<IPv6 address> EMCUTE_ID=station0 BOARD=iotl
 
 #### Flash the riot sensor node firmware on an M3 node 104
 ```sh
-iotlab-node --flash ./bin/iotlab-m3/SensorNode.elf -l grenoble,m3,104
+iotlab-node --flash ./bin/iotlab-m3/IoTSensors.elf -l grenoble,m3,104
 ```
 
 
